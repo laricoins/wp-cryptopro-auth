@@ -1,0 +1,509 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: CryptoPro Auth for WP\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-20 07:28+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.8.0; wp-6.8.3; php-8.2.29\n"
+"X-Domain: cryptopro-auth"
+
+#: templates/admin-settings.php:50
+msgid "API Endpoint"
+msgstr ""
+
+#: includes/class-api-integration.php:59
+msgid "COM поддержка не доступна"
+msgstr ""
+
+#: includes/class-admin.php:46
+msgid "CryptoPro Auth"
+msgstr ""
+
+#. Name of the plugin
+msgid "CryptoPro Auth for WP"
+msgstr ""
+
+#: templates/admin-settings.php:188
+msgid "CSS класс"
+msgstr ""
+
+#: includes/class-ajax.php:110
+msgid "PHP расширение КриптоПро доступно"
+msgstr ""
+
+#: includes/class-ajax.php:124
+msgid ""
+"PHP расширение КриптоПро не найдено. Будет использована упрощенная проверка "
+"подписи."
+msgstr ""
+
+#: templates/admin-settings.php:57
+msgid "URL endpoint для проверки подписей"
+msgstr ""
+
+#: templates/admin-settings.php:104
+msgid ""
+"URL для перенаправления после успешной авторизации. Оставьте пустым для "
+"использования главной страницы."
+msgstr ""
+
+#: templates/admin-settings.php:97
+msgid "URL редиректа после авторизации"
+msgstr ""
+
+#. Author of the plugin
+msgid "webpavlo"
+msgstr ""
+
+#: includes/class-auth-handler.php:32
+msgid "Авторизация по HTTP запрещена настройками безопасности"
+msgstr ""
+
+#: cryptopro-auth.php:146 includes/class-auth-handler.php:120
+msgid "Авторизация успешна"
+msgstr ""
+
+#: includes/class-shortcodes.php:86
+msgid "Авторизация через ЭЦП"
+msgstr ""
+
+#: templates/admin-settings.php:64
+msgid "Автосоздание пользователей"
+msgstr ""
+
+#: templates/admin-settings.php:110
+msgid "Безопасность"
+msgstr ""
+
+#: templates/admin-settings.php:178
+msgid "Блок авторизации:"
+msgstr ""
+
+#: templates/debug-info.php:17
+msgid "Браузер:"
+msgstr ""
+
+#: templates/admin-settings.php:44
+msgid ""
+"В тест-режиме авторизация проходит без проверки подписи на сервере. "
+"Используйте только для разработки и тестирования!"
+msgstr ""
+
+#: templates/admin-settings.php:119
+msgid ""
+"Введите части названий доверенных издателей (Issuer), по одному на строку. "
+"Например: \"Федеральная налоговая служба\". Если пусто - проверка отключена."
+msgstr ""
+
+#: templates/debug-info.php:15 includes/class-shortcodes.php:138
+msgid "Версия PHP:"
+msgstr ""
+
+#: templates/debug-info.php:16 includes/class-shortcodes.php:139
+msgid "Версия WordPress:"
+msgstr ""
+
+#: includes/class-shortcodes.php:141
+msgid "Версия плагина:"
+msgstr ""
+
+#: includes/class-shortcodes.php:140
+msgid "Включен"
+msgstr ""
+
+#: templates/admin-settings.php:158
+msgid "Включить заголовки CORS для API"
+msgstr ""
+
+#: templates/admin-settings.php:91
+msgid "Включить отладочные сообщения на странице"
+msgstr ""
+
+#: templates/admin-settings.php:42
+msgid "Включить тест-режим (пропускать проверку подписи на сервере)"
+msgstr ""
+
+#: cryptopro-auth.php:151 templates/login-form.php:13
+#: includes/class-shortcodes.php:37
+msgid "Войти с помощью КриптоПро"
+msgstr ""
+
+#: templates/login-form.php:11
+msgid "Войти через ЭЦП"
+msgstr ""
+
+#: cryptopro-auth.php:148
+msgid "Выберите сертификат:"
+msgstr ""
+
+#: includes/class-shortcodes.php:140
+msgid "Выключен"
+msgstr ""
+
+#: templates/debug-info.php:10 includes/class-shortcodes.php:127
+msgid "Диагностика CryptoPro Auth"
+msgstr ""
+
+#: includes/class-ajax.php:125
+msgid ""
+"Для полной проверки подписи установите PHP расширение КриптоПро. Подробнее: "
+"https://cryptopro.ru"
+msgstr ""
+
+#: templates/login-form.php:17 includes/class-shortcodes.php:57
+msgid "Для работы необходимы:"
+msgstr ""
+
+#: templates/admin-settings.php:114
+msgid "Доверенные УЦ (Whitelist)"
+msgstr ""
+
+#: templates/admin-settings.php:186
+msgid "Заголовок блока"
+msgstr ""
+
+#: templates/admin-settings.php:131
+msgid "Записывать попытки входа в лог-файл"
+msgstr ""
+
+#: templates/admin-settings.php:145
+msgid "Запретить авторизацию по незащищенному протоколу HTTP"
+msgstr ""
+
+#: templates/debug-info.php:23
+msgid "Запустить тест"
+msgstr ""
+
+#: includes/class-shortcodes.php:145
+msgid "Запустить тест обнаружения"
+msgstr ""
+
+#: templates/debug-info.php:13
+msgid "Информация о системе"
+msgstr ""
+
+#: includes/class-shortcodes.php:136
+msgid "Информация о системе:"
+msgstr ""
+
+#: includes/class-shortcodes.php:87
+msgid "Используйте электронную подпись для входа в систему"
+msgstr ""
+
+#: templates/admin-settings.php:133
+#, php-format
+msgid "Лог файл: %s"
+msgstr ""
+
+#: templates/admin-settings.php:126
+msgid "Логирование попыток входа"
+msgstr ""
+
+#: templates/login-form.php:21 includes/class-shortcodes.php:61
+msgid "Настроить сертификат ЭЦП"
+msgstr ""
+
+#: includes/class-admin.php:31
+msgid "Настройки"
+msgstr ""
+
+#: templates/admin-settings.php:151
+msgid "Настройки CORS"
+msgstr ""
+
+#: templates/admin-settings.php:12 includes/class-admin.php:45
+msgid "Настройки CryptoPro Auth"
+msgstr ""
+
+#: cryptopro-auth.php:150
+msgid "Начало процесса авторизации..."
+msgstr ""
+
+#: includes/class-ajax.php:53
+msgid "Неверные данные для авторизации"
+msgstr ""
+
+#: includes/class-auth-handler.php:465
+msgid "Неверный формат времени подписи"
+msgstr ""
+
+#: includes/class-auth-handler.php:236 includes/class-auth-handler.php:427
+msgid "Неверный формат подписанных данных"
+msgstr ""
+
+#: includes/class-auth-handler.php:365 includes/class-auth-handler.php:453
+msgid "Неверный формат подписи"
+msgstr ""
+
+#: includes/class-certificate-validator.php:20
+#: includes/class-auth-handler.php:45
+msgid "Неверный формат сертификата"
+msgstr ""
+
+#: includes/class-ajax.php:76
+msgid "Недостаточно прав"
+msgstr ""
+
+#: includes/class-auth-handler.php:505
+msgid "Некорректная длина подписи"
+msgstr ""
+
+#: includes/class-auth-handler.php:376 includes/class-auth-handler.php:494
+msgid "Несоответствие данных сертификата"
+msgstr ""
+
+#: templates/admin-settings.php:187
+msgid "Описание"
+msgstr ""
+
+#: includes/class-certificate-validator.php:180
+#, php-format
+msgid "Организация '%s' не имеет доступа"
+msgstr ""
+
+#: templates/admin-settings.php:27
+msgid "Основные настройки"
+msgstr ""
+
+#: templates/debug-info.php:29
+msgid "Откройте консоль браузера (F12) и проверьте наличие объектов:"
+msgstr ""
+
+#: templates/admin-settings.php:179
+msgid "Отладочная информация:"
+msgstr ""
+
+#: includes/class-certificate-validator.php:33
+#: includes/class-auth-handler.php:246 includes/class-auth-handler.php:440
+#, php-format
+msgid "Отсутствует обязательное поле: %s"
+msgstr ""
+
+#: includes/class-auth-handler.php:410
+msgid "Отсутствуют данные для проверки подписи"
+msgstr ""
+
+#: cryptopro-auth.php:147
+msgid "Ошибка авторизации"
+msgstr ""
+
+#: includes/class-admin.php:158
+msgid "Ошибка проверки"
+msgstr ""
+
+#: cryptopro-auth.php:152
+msgid "Ошибка сети"
+msgstr ""
+
+#: templates/admin-settings.php:181
+msgid "Параметры:"
+msgstr ""
+
+#: cryptopro-auth.php:144
+msgid "Плагин КриптоПро не найден"
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"Плагин для авторизации на сайте WordPress с использованием электронной "
+"цифровой подписи (ЭЦП) КриптоПро."
+msgstr ""
+
+#: includes/class-auth-handler.php:473
+msgid "Подпись из будущего времени"
+msgstr ""
+
+#: includes/class-auth-handler.php:310
+msgid "Подпись проверена (без проверки цепочки)"
+msgstr ""
+
+#: includes/class-auth-handler.php:289 includes/class-auth-handler.php:385
+msgid "Подпись проверена через PHP расширение КриптоПро"
+msgstr ""
+
+#: includes/class-auth-handler.php:516
+msgid "Подпись прошла базовую проверку"
+msgstr ""
+
+#: includes/class-auth-handler.php:481
+msgid "Подпись устарела (старше 5 минут)"
+msgstr ""
+
+#: includes/class-auth-handler.php:258
+msgid "Подпись устарела или имеет неверное время"
+msgstr ""
+
+#: templates/admin-settings.php:184
+msgid "Показывать инструкцию"
+msgstr ""
+
+#: templates/admin-settings.php:185
+msgid "Показывать отладку"
+msgstr ""
+
+#: includes/class-auth-handler.php:582
+msgid "Пользователь с таким сертификатом не найден, а регистрация отключена."
+msgstr ""
+
+#: templates/admin-settings.php:19
+msgid "Проверить CPStore"
+msgstr ""
+
+#: templates/debug-info.php:42 includes/class-shortcodes.php:154
+msgid "Проверка объектов..."
+msgstr ""
+
+#: includes/class-shortcodes.php:144
+msgid "Проверка плагина:"
+msgstr ""
+
+#: includes/class-ajax.php:118
+msgid "Проверка подписи будет выполняться через PHP расширение"
+msgstr ""
+
+#: includes/class-auth-handler.php:75
+msgid "Проверка подписи пропущена (тест-режим)"
+msgstr ""
+
+#: templates/admin-settings.php:15
+msgid "Проверка системы"
+msgstr ""
+
+#: includes/class-admin.php:157
+msgid "Проверка успешна"
+msgstr ""
+
+#: includes/class-admin.php:156
+msgid "Проверка..."
+msgstr ""
+
+#: templates/admin-settings.php:161
+msgid "Разрешенные домены (Origins):"
+msgstr ""
+
+#: templates/admin-settings.php:86
+msgid "Режим отладки"
+msgstr ""
+
+#: includes/class-shortcodes.php:140
+msgid "Режим отладки:"
+msgstr ""
+
+#: templates/admin-settings.php:75
+msgid "Роль по умолчанию"
+msgstr ""
+
+#: templates/debug-info.php:28
+msgid "Ручная проверка"
+msgstr ""
+
+#: cryptopro-auth.php:149
+msgid "Сертификат выбран"
+msgstr ""
+
+#: includes/class-certificate-validator.php:224
+msgid "Сертификат выдан недоверенным Удостоверяющим Центром"
+msgstr ""
+
+#: includes/class-certificate-validator.php:87
+msgid "Сертификат еще не действителен"
+msgstr ""
+
+#: includes/class-auth-handler.php:561
+msgid "Сертификат не содержит идентификационных данных"
+msgstr ""
+
+#: includes/class-certificate-validator.php:211
+msgid "Сертификат не содержит информации об издателе"
+msgstr ""
+
+#: includes/class-certificate-validator.php:172
+msgid "Сертификат не содержит информации об организации"
+msgstr ""
+
+#: cryptopro-auth.php:145
+msgid "Сертификаты не найдены"
+msgstr ""
+
+#: templates/login-form.php:23
+msgid "Скачать КриптоПро CSP"
+msgstr ""
+
+#: templates/admin-settings.php:69
+msgid "Создавать пользователей автоматически"
+msgstr ""
+
+#: templates/admin-settings.php:164
+msgid ""
+"Список разрешенных доменов для Cross-Origin запросов, по одному на строку. "
+"По умолчанию добавлен текущий домен."
+msgstr ""
+
+#: includes/class-certificate-validator.php:98
+msgid "Срок действия сертификата истек"
+msgstr ""
+
+#: templates/admin-settings.php:183
+msgid "Текст кнопки"
+msgstr ""
+
+#: templates/debug-info.php:22
+msgid "Тест обнаружения плагина"
+msgstr ""
+
+#: templates/admin-settings.php:37
+msgid "Тест-режим"
+msgstr ""
+
+#: includes/class-auth-handler.php:624
+msgid "Тестовый пользователь"
+msgstr ""
+
+#: includes/class-shortcodes.php:123
+msgid "Только администраторы могут использовать этот шорткод"
+msgstr ""
+
+#: templates/admin-settings.php:140
+msgid "Требовать HTTPS"
+msgstr ""
+
+#: templates/login-form.php:20 includes/class-shortcodes.php:60
+msgid "Установить КриптоПро Browser Plugin"
+msgstr ""
+
+#: templates/login-form.php:19 includes/class-shortcodes.php:59
+msgid "Установить КриптоПро CSP"
+msgstr ""
+
+#: templates/admin-settings.php:177
+msgid "Форма логина:"
+msgstr ""
+
+#: templates/admin-settings.php:176
+msgid "Шорткоды"
+msgstr ""
+
+#: includes/class-ajax.php:117
+msgid "Экземпляр CPStore успешно создан"
+msgstr ""
+
+#: includes/class-shortcodes.php:32
+msgid "вы уже залогинены"
+msgstr ""
+
+#: templates/debug-info.php:58 includes/class-shortcodes.php:165
+msgid "найден"
+msgstr ""
+
+#: templates/debug-info.php:60 includes/class-shortcodes.php:167
+msgid "не найден"
+msgstr ""
