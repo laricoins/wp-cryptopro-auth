@@ -1,14 +1,17 @@
 <?php
 /**
- * Plugin Name: CryptoPro Auth for WP
- * Description: Плагин для авторизации на сайте WordPress с использованием электронной цифровой подписи (ЭЦП) КриптоПро.
- * Version: 1.0.0
- * Author: webpavlo
- * Text Domain: wp-cryptopro-auth
- * Requires PHP: 8.2
+ * Plugin Name:       CryptoPro Auth
+ * Plugin URI:        https://github.com/yourusername/cryptopro-auth
+ * Description:       Авторизация в WordPress с помощью ЭЦП КриптоПро
+ * Version:           1.0.0
+ * Author:            WebPavlo
+ * Author URI:        https://github.com/yourusername
+ * License:           GPL v2 or later
+ * Text Domain:       cryptopro-auth
+ * Domain Path:       /languages
+ * Requires PHP:      8.2
  * Requires at least: 5.0
- * License: GPLv2 or later
- * License URI: http://www.gnu.org/licenses/gpl-2.0.html
+ * License URI:       http://www.gnu.org/licenses/gpl-2.0.html
  */
 if (!defined('ABSPATH')) {
     exit;
@@ -127,15 +130,15 @@ class CryptoProAuthPlugin {
             'debug_container' => $this->get_debug_container(),
             'plugin_version' => $version,
             'strings' => array(
-                'plugin_not_found' => __('Плагин КриптоПро не найден', 'wp-cryptopro-auth'),
-                'no_certificates' => __('Сертификаты не найдены', 'wp-cryptopro-auth'),
-                'auth_success' => __('Авторизация успешна', 'wp-cryptopro-auth'),
-                'auth_error' => __('Ошибка авторизации', 'wp-cryptopro-auth'),
-                'select_certificate' => __('Выберите сертификат:', 'wp-cryptopro-auth'),
-                'certificate_selected' => __('Сертификат выбран', 'wp-cryptopro-auth'),
-                'auth_process' => __('Начало процесса авторизации...', 'wp-cryptopro-auth'),
-                'login_with_crypto' => __('Войти с помощью КриптоПро', 'wp-cryptopro-auth'),
-                'network_error' => __('Ошибка сети', 'wp-cryptopro-auth')
+                'plugin_not_found' => __('Плагин КриптоПро не найден', 'cryptopro-auth'),
+                'no_certificates' => __('Сертификаты не найдены', 'cryptopro-auth'),
+                'auth_success' => __('Авторизация успешна', 'cryptopro-auth'),
+                'auth_error' => __('Ошибка авторизации', 'cryptopro-auth'),
+                'select_certificate' => __('Выберите сертификат:', 'cryptopro-auth'),
+                'certificate_selected' => __('Сертификат выбран', 'cryptopro-auth'),
+                'auth_process' => __('Начало процесса авторизации...', 'cryptopro-auth'),
+                'login_with_crypto' => __('Войти с помощью КриптоПро', 'cryptopro-auth'),
+                'network_error' => __('Ошибка сети', 'cryptopro-auth')
             )
         ));
     }

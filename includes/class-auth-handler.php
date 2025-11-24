@@ -29,7 +29,7 @@ class CryptoPro_Auth_Handler {
         
         // Проверка HTTPS
         if (!empty($settings['require_https']) && !is_ssl()) {
-            $message = __('Авторизация по HTTP запрещена настройками безопасности', 'wp-cryptopro-auth');
+            $message = __('Авторизация по HTTP запрещена настройками безопасности', 'cryptopro-auth');
             $this->log_auth_attempt('error', null, $message);
             return array(
                 'success' => false,
@@ -39,10 +39,10 @@ class CryptoPro_Auth_Handler {
 
         try {
             // Декодируем сертификат
-            $cert_data = json_decode(stripslashes($certificate), true);
+            $cert_data = json_decode($certificate, true);
             
             if (!$cert_data) {
-                $message = __('Неверный формат сертификата', 'wp-cryptopro-auth');
+                $message = __('Неверный формат сертификата', 'cryptopro-auth');
                 $this->log_auth_attempt('error', null, $message);
                 return array(
                     'success' => false,
@@ -72,7 +72,7 @@ class CryptoPro_Auth_Handler {
                 
                 $verify_result = array(
                     'success' => true,
-                    'message' => __('Проверка подписи пропущена (тест-режим)', 'wp-cryptopro-auth'),
+                    'message' => __('Проверка подписи пропущена (тест-режим)', 'cryptopro-auth'),
                     'data' => array('timestamp' => time())
                 );
             } else {
@@ -117,7 +117,7 @@ class CryptoPro_Auth_Handler {
                 'success' => true,
                 'user_id' => $user->ID,
                 'redirect_url' => $redirect_url,
-                'message' => __('Авторизация успешна', 'wp-cryptopro-auth')
+                'message' => __('Авторизация успешна', 'cryptopro-auth')
             );
             
         } catch (Exception $e) {
@@ -234,11 +234,11 @@ class CryptoPro_Auth_Handler {
     private function verify_signature_with_php_extension(string $signed_data, string $signature, mixed $certificate): array {
         try {
             // Декодируем подписанные данные
-            $data = json_decode(stripslashes($signed_data), true);
+            $data = json_decode($signed_data, true);
             if (!$data) {
                 return array(
                     'success' => false,
-                    'message' => __('Неверный формат подписанных данных', 'wp-cryptopro-auth')
+                    'message' => __('Неверный формат подписанных данных', 'cryptopro-auth')
                 );
             }
             
@@ -249,7 +249,7 @@ class CryptoPro_Auth_Handler {
                     return array(
                         'success' => false,
                         /* translators: %s: name of the required field */
-                        'message' => sprintf(__('Отсутствует обязательное поле: %s', 'wp-cryptopro-auth'), $field)
+                        'message' => sprintf(__('Отсутствует обязательное поле: %s', 'cryptopro-auth'), $field)
                     );
                 }
             }
@@ -261,7 +261,7 @@ class CryptoPro_Auth_Handler {
             if (!$timestamp || $timestamp > $now + 60 || $now - $timestamp > 300) {
                 return array(
                     'success' => false,
-                    'message' => __('Подпись устарела или имеет неверное время', 'wp-cryptopro-auth')
+                    'message' => __('Подпись устарела или имеет неверное время', 'cryptopro-auth')
                 );
             }
             
@@ -292,7 +292,7 @@ class CryptoPro_Auth_Handler {
                             
                             return array(
                                 'success' => true,
-                                'message' => __('Подпись проверена через PHP расширение КриптоПро', 'wp-cryptopro-auth'),
+                                'message' => __('Подпись проверена через PHP расширение КриптоПро', 'cryptopro-auth'),
                                 'data' => $data
                             );
                         } else {
@@ -313,7 +313,7 @@ class CryptoPro_Auth_Handler {
                             
                             return array(
                                 'success' => true,
-                                'message' => __('Подпись проверена (без проверки цепочки)', 'wp-cryptopro-auth'),
+                                'message' => __('Подпись проверена (без проверки цепочки)', 'cryptopro-auth'),
                                 'data' => $data
                             );
                         } catch (Exception $verifyFallbackException) {
@@ -368,7 +368,7 @@ class CryptoPro_Auth_Handler {
             if (!preg_match('/^[a-zA-Z0-9+\/]*={0,2}$/', $clean_signature)) {
                 return array(
                     'success' => false,
-                    'message' => __('Неверный формат подписи', 'wp-cryptopro-auth')
+                    'message' => __('Неверный формат подписи', 'cryptopro-auth')
                 );
             }
             
@@ -379,7 +379,7 @@ class CryptoPro_Auth_Handler {
                     error_log("CryptoPro Auth - Certificate mismatch");
                     return array(
                         'success' => false,
-                        'message' => __('Несоответствие данных сертификата', 'wp-cryptopro-auth')
+                        'message' => __('Несоответствие данных сертификата', 'cryptopro-auth')
                     );
                 }
             }
@@ -388,7 +388,7 @@ class CryptoPro_Auth_Handler {
             
             return array(
                 'success' => true,
-                'message' => __('Подпись проверена через PHP расширение КриптоПро', 'wp-cryptopro-auth'),
+                'message' => __('Подпись проверена через PHP расширение КриптоПро', 'cryptopro-auth'),
                 'data' => $data
             );
             
@@ -413,15 +413,15 @@ class CryptoPro_Auth_Handler {
         if (empty($signed_data) || empty($signature)) {
             return array(
                 'success' => false,
-                'message' => __('Отсутствуют данные для проверки подписи', 'wp-cryptopro-auth')
+                'message' => __('Отсутствуют данные для проверки подписи', 'cryptopro-auth')
             );
         }
         
         // Убираем экранирование из JSON данных
-        $decoded_data = stripslashes($signed_data);
+        // $decoded_data = stripslashes($signed_data); // Removed redundant stripslashes
         
         // Декодируем подписанные данные
-        $data = json_decode($decoded_data, true);
+        $data = json_decode($signed_data, true);
         if (!$data) {
             // Пробуем декодировать без stripslashes на случай если данные не экранированы
             $data = json_decode($signed_data, true);
@@ -430,7 +430,7 @@ class CryptoPro_Auth_Handler {
                 error_log("CryptoPro Auth - Decoded attempt: " . $decoded_data);
                 return array(
                     'success' => false,
-                    'message' => __('Неверный формат подписанных данных', 'wp-cryptopro-auth')
+                    'message' => __('Неверный формат подписанных данных', 'cryptopro-auth')
                 );
             }
         }
@@ -444,7 +444,7 @@ class CryptoPro_Auth_Handler {
                 return array(
                     'success' => false,
                     /* translators: %s: name of the required field */
-                    'message' => sprintf(__('Отсутствует обязательное поле: %s', 'wp-cryptopro-auth'), $field)
+                    'message' => sprintf(__('Отсутствует обязательное поле: %s', 'cryptopro-auth'), $field)
                 );
             }
         }
@@ -457,7 +457,7 @@ class CryptoPro_Auth_Handler {
             error_log("CryptoPro Auth - Invalid signature format. Length: " . strlen($clean_signature));
             return array(
                 'success' => false,
-                'message' => __('Неверный формат подписи', 'wp-cryptopro-auth')
+                'message' => __('Неверный формат подписи', 'cryptopro-auth')
             );
         }
         
@@ -469,7 +469,7 @@ class CryptoPro_Auth_Handler {
             error_log("CryptoPro Auth - Invalid timestamp: " . $data['timestamp']);
             return array(
                 'success' => false,
-                'message' => __('Неверный формат времени подписи', 'wp-cryptopro-auth')
+                'message' => __('Неверный формат времени подписи', 'cryptopro-auth')
             );
         }
         
@@ -477,7 +477,7 @@ class CryptoPro_Auth_Handler {
             error_log("CryptoPro Auth - Future timestamp: " . $data['timestamp']);
             return array(
                 'success' => false,
-                'message' => __('Подпись из будущего времени', 'wp-cryptopro-auth')
+                'message' => __('Подпись из будущего времени', 'cryptopro-auth')
             );
         }
         
@@ -485,7 +485,7 @@ class CryptoPro_Auth_Handler {
             error_log("CryptoPro Auth - Expired timestamp: " . $data['timestamp']);
             return array(
                 'success' => false,
-                'message' => __('Подпись устарела (старше 5 минут)', 'wp-cryptopro-auth')
+                'message' => __('Подпись устарела (старше 5 минут)', 'cryptopro-auth')
             );
         }
         
@@ -498,7 +498,7 @@ class CryptoPro_Auth_Handler {
                 error_log("CryptoPro Auth - Data subject: " . $data['certificate_subject']);
                 return array(
                     'success' => false,
-                    'message' => __('Несоответствие данных сертификата', 'wp-cryptopro-auth')
+                    'message' => __('Несоответствие данных сертификата', 'cryptopro-auth')
                 );
             }
         }
@@ -509,7 +509,7 @@ class CryptoPro_Auth_Handler {
             error_log("CryptoPro Auth - Invalid signature length: " . $signature_length);
             return array(
                 'success' => false,
-                'message' => __('Некорректная длина подписи', 'wp-cryptopro-auth')
+                'message' => __('Некорректная длина подписи', 'cryptopro-auth')
             );
         }
         
@@ -520,7 +520,7 @@ class CryptoPro_Auth_Handler {
         
         return array(
             'success' => true,
-            'message' => __('Подпись прошла базовую проверку', 'wp-cryptopro-auth'),
+            'message' => __('Подпись прошла базовую проверку', 'cryptopro-auth'),
             'data' => $data
         );
     }
@@ -565,7 +565,7 @@ class CryptoPro_Auth_Handler {
         error_log("CryptoPro Auth - Parsed email: " . $email);
         
         if (empty($email) && empty($common_name)) {
-            return new WP_Error('invalid_certificate', __('Сертификат не содержит идентификационных данных', 'wp-cryptopro-auth'));
+            return new WP_Error('invalid_certificate', __('Сертификат не содержит идентификационных данных', 'cryptopro-auth'));
         }
         
         // Поиск по email
@@ -586,7 +586,7 @@ class CryptoPro_Auth_Handler {
         
         return new WP_Error(
             'user_not_found', 
-            __('Пользователь с таким сертификатом не найден, а регистрация отключена.', 'wp-cryptopro-auth')
+            __('Пользователь с таким сертификатом не найден, а регистрация отключена.', 'cryptopro-auth')
         );
     }
     
@@ -628,7 +628,7 @@ class CryptoPro_Auth_Handler {
         if ($this->is_test_mode()) {
             // Проверяем существование роли, если нет - создаем
             if (!get_role('testuser')) {
-                add_role('testuser', __('Тестовый пользователь', 'wp-cryptopro-auth'), array('read' => true));
+                add_role('testuser', __('Тестовый пользователь', 'cryptopro-auth'), array('read' => true));
             }
             $default_role = 'testuser';
         }

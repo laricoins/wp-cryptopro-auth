@@ -1,4 +1,4 @@
-=== CryptoPro Auth for WP ===
+=== CryptoPro Auth ===
 Contributors: webpavlo
 Tags: cryptopro, authentication, gost, signature, cades
 Requires at least: 5.0
@@ -24,7 +24,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Installation ==
 
-1.  Загрузите папку плагина `wp-cryptopro-auth` в директорию `/wp-content/plugins/`.
+1.  Загрузите папку плагина `cryptopro-auth` в директорию `/wp-content/plugins/`.
 2.  Активируйте плагин через меню "Плагины" в WordPress.
 3.  Перейдите в настройки: **Настройки -> CryptoPro Auth**.
 

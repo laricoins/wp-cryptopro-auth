@@ -50,7 +50,7 @@ class CryptoPro_Ajax {
         $signature = isset($_POST['signature']) ? sanitize_text_field(wp_unslash($_POST['signature'])) : '';
         
         if (empty($signed_data) || empty($certificate)) {
-            wp_send_json_error(__('Неверные данные для авторизации', 'wp-cryptopro-auth'));
+            wp_send_json_error(__('Неверные данные для авторизации', 'cryptopro-auth'));
         }
         
         $auth_handler = new CryptoPro_Auth_Handler();
@@ -73,7 +73,7 @@ class CryptoPro_Ajax {
         check_ajax_referer('cryptopro_auth_nonce', 'nonce');
         
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(__('Недостаточно прав', 'wp-cryptopro-auth'));
+            wp_send_json_error(__('Недостаточно прав', 'cryptopro-auth'));
         }
         
         $result = array(
@@ -107,22 +107,22 @@ class CryptoPro_Ajax {
             
             if ($php_extension_available) {
                 $result['available'] = true;
-                $result['message'] = __('PHP расширение КриптоПро доступно', 'wp-cryptopro-auth');
+                $result['message'] = __('PHP расширение КриптоПро доступно', 'cryptopro-auth');
                 $result['details']['classes'] = implode(', ', $available_classes);
                 
                 // Попытка создать экземпляр CPStore
                 if (class_exists('CPStore')) {
                     try {
                         $store = new CPStore();
-                        $result['details']['instance'] = __('Экземпляр CPStore успешно создан', 'wp-cryptopro-auth');
-                        $result['details']['verification'] = __('Проверка подписи будет выполняться через PHP расширение', 'wp-cryptopro-auth');
+                        $result['details']['instance'] = __('Экземпляр CPStore успешно создан', 'cryptopro-auth');
+                        $result['details']['verification'] = __('Проверка подписи будет выполняться через PHP расширение', 'cryptopro-auth');
                     } catch (Exception $e) {
                         $result['details']['instance_error'] = $e->getMessage();
                     }
                 }
             } else {
-                $result['message'] = __('PHP расширение КриптоПро не найдено. Будет использована упрощенная проверка подписи.', 'wp-cryptopro-auth');
-                $result['details']['note'] = __('Для полной проверки подписи установите PHP расширение КриптоПро. Подробнее: https://cryptopro.ru', 'wp-cryptopro-auth');
+                $result['message'] = __('PHP расширение КриптоПро не найдено. Будет использована упрощенная проверка подписи.', 'cryptopro-auth');
+                $result['details']['note'] = __('Для полной проверки подписи установите PHP расширение КриптоПро. Подробнее: https://cryptopro.ru', 'cryptopro-auth');
             }
         } catch (Exception $e) {
             $result['message'] = $e->getMessage();

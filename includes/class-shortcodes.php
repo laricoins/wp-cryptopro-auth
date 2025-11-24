@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) {
 class CryptoPro_Shortcodes {
     
     /**
-     * РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.
+     * Конструктор класса.
      * 
      * @author @ddnitecry
      */
@@ -17,10 +17,10 @@ class CryptoPro_Shortcodes {
     }
     
     /**
-     * РЁРѕСЂС‚РєРѕРґ РґР»СЏ РєРЅРѕРїРєРё РІС…РѕРґР° [cryptopro_login].
+     * Шорткод для кнопки входа [cryptopro_login].
      * 
-     * @param mixed $atts РђС‚СЂРёР±СѓС‚С‹ С€РѕСЂС‚РєРѕРґР°.
-     * @return string HTML РєРѕРґ.
+     * @param mixed $atts Атрибуты шорткода.
+     * @return string HTML код.
      * @author @ddnitecry
      */
     public function login_shortcode(mixed $atts): string {
@@ -29,12 +29,12 @@ class CryptoPro_Shortcodes {
             return sprintf(
                 '<div class="cryptopro-logged-in-message">%s, %s</div>',
                 esc_html($current_user->display_name),
-                __('РІС‹ СѓР¶Рµ Р·Р°Р»РѕРіРёРЅРµРЅС‹', 'wp-cryptopro-auth')
+                __('вы уже залогинены', 'cryptopro-auth')
             );
         }
 
         $atts = shortcode_atts(array(
-            'button_text' => __('Р’РѕР№С‚Рё СЃ РїРѕРјРѕС‰СЊСЋ РљСЂРёРїС‚РѕРџСЂРѕ', 'wp-cryptopro-auth'),
+            'button_text' => __('Войти с помощью КриптоПро', 'cryptopro-auth'),
             'show_guide' => 'true',
             'show_debug' => $this->is_debug_enabled() ? 'true' : 'false',
             'class' => 'cryptopro-login-form'
@@ -54,11 +54,11 @@ class CryptoPro_Shortcodes {
             
             <?php if ($atts['show_guide'] === 'true'): ?>
             <div class="cryptopro-auth-guide" style="display: none;">
-                <h4><?php esc_html_e('Р”Р»СЏ СЂР°Р±РѕС‚С‹ РЅРµРѕР±С…РѕРґРёРјС‹:', 'wp-cryptopro-auth'); ?></h4>
+                <h4><?php esc_html_e('Для работы необходимы:', 'cryptopro-auth'); ?></h4>
                 <ol>
-                    <li><?php esc_html_e('РЈСЃС‚Р°РЅРѕРІРёС‚СЊ РљСЂРёРїС‚РѕРџСЂРѕ CSP', 'wp-cryptopro-auth'); ?></li>
-                    <li><?php esc_html_e('РЈСЃС‚Р°РЅРѕРІРёС‚СЊ РљСЂРёРїС‚РѕРџСЂРѕ Browser Plugin', 'wp-cryptopro-auth'); ?></li>
-                    <li><?php esc_html_e('РќР°СЃС‚СЂРѕРёС‚СЊ СЃРµСЂС‚РёС„РёРєР°С‚ Р­Р¦Рџ', 'wp-cryptopro-auth'); ?></li>
+                    <li><?php esc_html_e('Установить КриптоПро CSP', 'cryptopro-auth'); ?></li>
+                    <li><?php esc_html_e('Установить КриптоПро Browser Plugin', 'cryptopro-auth'); ?></li>
+                    <li><?php esc_html_e('Настроить сертификат ЭЦП', 'cryptopro-auth'); ?></li>
                 </ol>
             </div>
             <?php endif; ?>
@@ -68,23 +68,23 @@ class CryptoPro_Shortcodes {
     }
     
     /**
-     * РЁРѕСЂС‚РєРѕРґ РґР»СЏ Р±Р»РѕРєР° Р°РІС‚РѕСЂРёР·Р°С†РёРё [cryptopro_auth].
+     * Шорткод для блока авторизации [cryptopro_auth].
      * 
-     * @param mixed $atts РђС‚СЂРёР±СѓС‚С‹ С€РѕСЂС‚РєРѕРґР°.
-     * @return string HTML РєРѕРґ.
+     * @param mixed $atts Атрибуты шорткода.
+     * @return string HTML код.
      * @author @ddnitecry
      */
     public function auth_shortcode(mixed $atts): string {
-        // Р•СЃР»Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ СѓР¶Рµ Р·Р°Р»РѕРіРёРЅРµРЅ, РїСЂРѕСЃС‚Рѕ РІС‹Р·С‹РІР°РµРј login_shortcode, 
-        // РєРѕС‚РѕСЂС‹Р№ РІРµСЂРЅРµС‚ СЃРѕРѕР±С‰РµРЅРёРµ Рѕ С‚РѕРј, С‡С‚Рѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ Р·Р°Р»РѕРіРёРЅРµРЅ.
-        // Р­С‚Рѕ РїСЂРµРґРѕС‚РІСЂР°С‚РёС‚ РїРѕРєР°Р· Р·Р°РіРѕР»РѕРІРєР° Рё РѕРїРёСЃР°РЅРёСЏ С„РѕСЂРјС‹ РІС…РѕРґР°.
+        // Если пользователь уже залогинен, просто вызываем login_shortcode, 
+        // который вернет сообщение о том, что пользователь залогинен.
+        // Это предотвратит показ заголовка и описания формы входа.
         if (is_user_logged_in()) {
             return $this->login_shortcode($atts);
         }
 
         $atts = shortcode_atts(array(
-            'title' => __('РђРІС‚РѕСЂРёР·Р°С†РёСЏ С‡РµСЂРµР· Р­Р¦Рџ', 'wp-cryptopro-auth'),
-            'description' => __('РСЃРїРѕР»СЊР·СѓР№С‚Рµ СЌР»РµРєС‚СЂРѕРЅРЅСѓСЋ РїРѕРґРїРёСЃСЊ РґР»СЏ РІС…РѕРґР° РІ СЃРёСЃС‚РµРјСѓ', 'wp-cryptopro-auth'),
+            'title' => __('Авторизация через ЭЦП', 'cryptopro-auth'),
+            'description' => __('Используйте электронную подпись для входа в систему', 'cryptopro-auth'),
             'show_debug' => $this->is_debug_enabled() ? 'true' : 'false',
             'redirect' => '',
             'class' => 'cryptopro-auth-block'
@@ -112,19 +112,19 @@ class CryptoPro_Shortcodes {
     }
     
     /**
-     * РЁРѕСЂС‚РєРѕРґ РґР»СЏ РґРёР°РіРЅРѕСЃС‚РёРєРё [cryptopro_debug].
+     * Шорткод для диагностики [cryptopro_debug].
      * 
-     * @param mixed $atts РђС‚СЂРёР±СѓС‚С‹ С€РѕСЂС‚РєРѕРґР°.
-     * @return string HTML РєРѕРґ.
+     * @param mixed $atts Атрибуты шорткода.
+     * @return string HTML код.
      * @author @ddnitecry
      */
     public function debug_shortcode(mixed $atts): string {
         if (!current_user_can('manage_options')) {
-            return __('РўРѕР»СЊРєРѕ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂС‹ РјРѕРіСѓС‚ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ СЌС‚РѕС‚ С€РѕСЂС‚РєРѕРґ', 'wp-cryptopro-auth');
+            return __('Только администраторы могут использовать этот шорткод', 'cryptopro-auth');
         }
         
         $atts = shortcode_atts(array(
-            'title' => __('Р”РёР°РіРЅРѕСЃС‚РёРєР° CryptoPro Auth', 'wp-cryptopro-auth'),
+            'title' => __('Диагностика CryptoPro Auth', 'cryptopro-auth'),
             'class' => 'cryptopro-debug-info'
         ), $atts);
         
@@ -133,16 +133,16 @@ class CryptoPro_Shortcodes {
         <div class="<?php echo esc_attr($atts['class']); ?>">
             <h3><?php echo esc_html($atts['title']); ?></h3>
             <div class="debug-info">
-                <h4><?php esc_html_e('РРЅС„РѕСЂРјР°С†РёСЏ Рѕ СЃРёСЃС‚РµРјРµ:', 'wp-cryptopro-auth'); ?></h4>
+                <h4><?php esc_html_e('Информация о системе:', 'cryptopro-auth'); ?></h4>
                 <ul>
-                    <li><?php esc_html_e('Р’РµСЂСЃРёСЏ PHP:', 'wp-cryptopro-auth'); ?> <?php echo esc_html(phpversion()); ?></li>
-                    <li><?php esc_html_e('Р’РµСЂСЃРёСЏ WordPress:', 'wp-cryptopro-auth'); ?> <?php echo esc_html(get_bloginfo('version')); ?></li>
-                    <li><?php esc_html_e('Режим отладки:', 'wp-cryptopro-auth'); ?> <?php echo $this->is_debug_enabled() ? esc_html(__('Включен', 'wp-cryptopro-auth')) : esc_html(__('Выключен', 'wp-cryptopro-auth')); ?></li>
-                    <li><?php esc_html_e('Р’РµСЂСЃРёСЏ РїР»Р°РіРёРЅР°:', 'wp-cryptopro-auth'); ?> <?php echo defined('CRYPTOPRO_AUTH_VERSION') ? esc_html(CRYPTOPRO_AUTH_VERSION) : 'Unknown'; ?></li>
+                    <li><?php esc_html_e('Версия PHP:', 'cryptopro-auth'); ?> <?php echo esc_html(phpversion()); ?></li>
+                    <li><?php esc_html_e('Версия WordPress:', 'cryptopro-auth'); ?> <?php echo esc_html(get_bloginfo('version')); ?></li>
+                    <li><?php esc_html_e('Режим отладки:', 'cryptopro-auth'); ?> <?php echo $this->is_debug_enabled() ? esc_html(__('Включен', 'cryptopro-auth')) : esc_html(__('Выключен', 'cryptopro-auth')); ?></li>
+                    <li><?php esc_html_e('Версия плагина:', 'cryptopro-auth'); ?> <?php echo defined('CRYPTOPRO_AUTH_VERSION') ? esc_html(CRYPTOPRO_AUTH_VERSION) : 'Unknown'; ?></li>
                 </ul>
                 
-                <h4><?php esc_html_e('РџСЂРѕРІРµСЂРєР° РїР»Р°РіРёРЅР°:', 'wp-cryptopro-auth'); ?></h4>
-                <button id="test-plugin-detection" class="button button-primary"><?php esc_html_e('Р—Р°РїСѓСЃС‚РёС‚СЊ С‚РµСЃС‚ РѕР±РЅР°СЂСѓР¶РµРЅРёСЏ', 'wp-cryptopro-auth'); ?></button>
+                <h4><?php esc_html_e('Проверка плагина:', 'cryptopro-auth'); ?></h4>
+                <button id="test-plugin-detection" class="button button-primary"><?php esc_html_e('Запустить тест обнаружения', 'cryptopro-auth'); ?></button>
                 <div id="test-results" style="margin-top: 15px;"></div>
             </div>
         </div>
@@ -151,7 +151,7 @@ class CryptoPro_Shortcodes {
         jQuery(document).ready(function($) {
             $('#test-plugin-detection').on('click', function() {
                 const results = $('#test-results');
-                results.html('<p><?php esc_html_e('РџСЂРѕРІРµСЂРєР° РѕР±СЉРµРєС‚РѕРІ...', 'wp-cryptopro-auth'); ?></p>');
+                results.html('<p><?php esc_html_e('Проверка объектов...', 'cryptopro-auth'); ?></p>');
                 
                 const objectsToCheck = [
                     'CryptoPro', 'cryptoPro', 'cadesplugin', 'CAdESCOM',
@@ -162,9 +162,9 @@ class CryptoPro_Shortcodes {
                 
                 objectsToCheck.forEach(objName => {
                     if (window[objName]) {
-                        foundObjects.push('<li><strong>' + objName + ':</strong> <?php esc_html_e('РЅР°Р№РґРµРЅ', 'wp-cryptopro-auth'); ?></li>');
+                        foundObjects.push('<li><strong>' + objName + ':</strong> <?php esc_html_e('найден', 'cryptopro-auth'); ?></li>');
                     } else {
-                        foundObjects.push('<li><strong>' + objName + ':</strong> <?php esc_html_e('РЅРµ РЅР°Р№РґРµРЅ', 'wp-cryptopro-auth'); ?></li>');
+                        foundObjects.push('<li><strong>' + objName + ':</strong> <?php esc_html_e('не найден', 'cryptopro-auth'); ?></li>');
                     }
                 });
                 
@@ -177,7 +177,7 @@ class CryptoPro_Shortcodes {
     }
     
     /**
-     * РџСЂРѕРІРµСЂРєР° СЂРµР¶РёРјР° РѕС‚Р»Р°РґРєРё.
+     * Проверка режима отладки.
      * 
      * @return bool
      * @author @ddnitecry

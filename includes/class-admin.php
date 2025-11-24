@@ -28,7 +28,7 @@ class CryptoPro_Admin {
      * @author @ddnitecry
      */
     public function add_action_links(array $links): array {
-        $settings_link = '<a href="options-general.php?page=cryptopro-auth-settings">' . __('Настройки', 'wp-cryptopro-auth') . '</a>';
+        $settings_link = '<a href="options-general.php?page=cryptopro-auth-settings">' . __('Настройки', 'cryptopro-auth') . '</a>';
         // Добавляем ссылку в конец массива (после Deactivate)
         $links['settings'] = $settings_link;
         return $links;
@@ -42,8 +42,8 @@ class CryptoPro_Admin {
      */
     public function add_admin_menu(): void {
         add_options_page(
-            __('Настройки CryptoPro Auth', 'wp-cryptopro-auth'),
-            __('CryptoPro Auth', 'wp-cryptopro-auth'),
+            __('Настройки CryptoPro Auth', 'cryptopro-auth'),
+            __('CryptoPro Auth', 'cryptopro-auth'),
             'manage_options',
             'cryptopro-auth-settings',
             array($this, 'admin_settings_page')
@@ -153,9 +153,9 @@ class CryptoPro_Admin {
                 'ajax_url' => admin_url('admin-ajax.php'),
                 'nonce' => wp_create_nonce('cryptopro_auth_nonce'),
                 'strings' => array(
-                    'checking' => __('Проверка...', 'wp-cryptopro-auth'),
-                    'check_success' => __('Проверка успешна', 'wp-cryptopro-auth'),
-                    'check_error' => __('Ошибка проверки', 'wp-cryptopro-auth')
+                    'checking' => __('Проверка...', 'cryptopro-auth'),
+                    'check_success' => __('Проверка успешна', 'cryptopro-auth'),
+                    'check_error' => __('Ошибка проверки', 'cryptopro-auth')
                 )
             ));
         }

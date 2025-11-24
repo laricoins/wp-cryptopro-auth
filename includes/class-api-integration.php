@@ -56,7 +56,7 @@ class CryptoPro_API_Integration {
         // Проверка через COM объект КриптоПро (только Windows)
         try {
             if (!class_exists('COM')) {
-                throw new Exception(__('COM поддержка не доступна', 'wp-cryptopro-auth'));
+                throw new Exception(__('COM поддержка не доступна', 'cryptopro-auth'));
             }
             
             $cryptoPro = new COM('CryptoPro.Certificate');

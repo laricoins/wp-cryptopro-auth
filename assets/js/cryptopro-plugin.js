@@ -563,6 +563,37 @@
             }
         }
 
+        getFriendlyErrorMessage(error) {
+            let message = error.message || error.toString();
+
+            if (message.indexOf("0x80070490") !== -1) {
+                return "Сертификат не найден или отсутствует привязка к закрытому ключу.";
+            }
+            if (message.indexOf("0x800B010A") !== -1) {
+                return "Не удается построить цепочку сертификатов для доверенного корневого центра.";
+            }
+            if (message.indexOf("0x800B0109") !== -1) {
+                return "Цепочка сертификатов обработана, но прервана на корневом сертификате, который не является доверенным.";
+            }
+            if (message.indexOf("0x80090016") !== -1 || message.indexOf("Keyset does not exist") !== -1) {
+                return "Контейнер закрытого ключа не найден.";
+            }
+            if (message.indexOf("0x8009001A") !== -1) {
+                return "Неверный пароль или контейнер закрытого ключа поврежден.";
+            }
+            if (message.indexOf("0x8009000F") !== -1) {
+                return "Объект или свойство не найдено.";
+            }
+            if (message.indexOf("0x8007064A") !== -1) {
+                return "Срок действия лицензии КриптоПро CSP истек.";
+            }
+            if (message.indexOf("User canceled the operation") !== -1 || message.indexOf("0x800704C7") !== -1) {
+                return "Операция отменена пользователем.";
+            }
+
+            return message;
+        }
+
         // Метод для присоединенной подписи (данные включаются в подпись)
         async createAttachedSignature(certSubjectName, dataToSign) {
             this.debugLog('Создание присоединенной подписи...');

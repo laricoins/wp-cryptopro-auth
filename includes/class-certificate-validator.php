@@ -17,7 +17,7 @@ class CryptoPro_Certificate_Validator {
         if (empty($certificate) || !is_array($certificate)) {
             return array(
                 'valid' => false,
-                'error' => __('Неверный формат сертификата', 'wp-cryptopro-auth')
+                'error' => __('Неверный формат сертификата', 'cryptopro-auth')
             );
         }
         
@@ -33,7 +33,7 @@ class CryptoPro_Certificate_Validator {
                 return array(
                     'valid' => false,
                     /* translators: %s: name of the required certificate field */
-                    'error' => sprintf(__('Отсутствует обязательное поле: %s', 'wp-cryptopro-auth'), $field)
+                    'error' => sprintf(__('Отсутствует обязательное поле: %s', 'cryptopro-auth'), $field)
                 );
             }
         }
@@ -87,7 +87,7 @@ class CryptoPro_Certificate_Validator {
             if ($valid_from && $valid_from > $now) {
                 return array(
                     'valid' => false,
-                    'error' => __('Сертификат еще не действителен', 'wp-cryptopro-auth')
+                    'error' => __('Сертификат еще не действителен', 'cryptopro-auth')
                 );
             }
         }
@@ -98,7 +98,7 @@ class CryptoPro_Certificate_Validator {
             if ($valid_to && $valid_to < $now) {
                 return array(
                     'valid' => false,
-                    'error' => __('Срок действия сертификата истек', 'wp-cryptopro-auth')
+                    'error' => __('Срок действия сертификата истек', 'cryptopro-auth')
                 );
             }
         }
@@ -172,7 +172,7 @@ class CryptoPro_Certificate_Validator {
         if (empty($org)) {
             return array(
                 'valid' => false,
-                'error' => __('Сертификат не содержит информации об организации', 'wp-cryptopro-auth')
+                'error' => __('Сертификат не содержит информации об организации', 'cryptopro-auth')
             );
         }
         
@@ -181,7 +181,7 @@ class CryptoPro_Certificate_Validator {
             return array(
                 'valid' => false,
                 /* translators: %s: organization name from the certificate */
-                'error' => sprintf(__("Организация '%s' не имеет доступа", 'wp-cryptopro-auth'), $org)
+                'error' => sprintf(__("Организация '%s' не имеет доступа", 'cryptopro-auth'), $org)
             );
         }
         
@@ -212,7 +212,7 @@ class CryptoPro_Certificate_Validator {
         if (empty($issuer_name)) {
             return array(
                 'valid' => false,
-                'error' => __('Сертификат не содержит информации об издателе', 'wp-cryptopro-auth')
+                'error' => __('Сертификат не содержит информации об издателе', 'cryptopro-auth')
             );
         }
         
@@ -225,7 +225,7 @@ class CryptoPro_Certificate_Validator {
         
         return array(
             'valid' => false,
-            'error' => __('Сертификат выдан недоверенным Удостоверяющим Центром', 'wp-cryptopro-auth')
+            'error' => __('Сертификат выдан недоверенным Удостоверяющим Центром', 'cryptopro-auth')
         );
     }
 }
