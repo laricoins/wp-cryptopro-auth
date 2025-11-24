@@ -191,4 +191,14 @@ $cryptopro_settings = get_option('cryptopro_auth_settings', array());
             <li><code>class</code> - <?php esc_html_e('CSS класс', 'cryptopro-auth'); ?></li>
         </ul>
     </div>
+    
+    <?php
+    /**
+     * Хук для добавления дополнительных секций настроек другими плагинами
+     * 
+     * @since 1.0.0
+     * @param array $cryptopro_settings Текущие настройки плагина CryptoPro Auth
+     */
+    do_action('cryptopro_auth_settings_page_end', $cryptopro_settings);
+    ?>
 </div>
