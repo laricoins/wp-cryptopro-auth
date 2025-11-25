@@ -23,7 +23,9 @@ class CryptoPro_Certificate_Validator {
         
         // Логируем для отладки
         if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('CryptoPro Certificate Data: ' . print_r($certificate, true));
+            if (class_exists('CryptoPro_Auth_Handler')) {
+                CryptoPro_Auth_Handler::log_auth_attempt('debug', $certificate, 'Certificate Data Validation');
+            }
         }
         
         // Проверяем обязательные поля

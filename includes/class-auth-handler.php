@@ -30,7 +30,7 @@ class CryptoPro_Auth_Handler {
         // Проверка HTTPS
         if (!empty($settings['require_https']) && !is_ssl()) {
             $message = __('Авторизация по HTTP запрещена настройками безопасности', 'cryptopro-auth');
-            $this->log_auth_attempt('error', null, $message);
+            self::log_auth_attempt('error', null, $message);
             return array(
                 'success' => false,
                 'message' => $message
@@ -43,7 +43,7 @@ class CryptoPro_Auth_Handler {
             
             if (!$cert_data) {
                 $message = __('Неверный формат сертификата', 'cryptopro-auth');
-                $this->log_auth_attempt('error', null, $message);
+                self::log_auth_attempt('error', null, $message);
                 return array(
                     'success' => false,
                     'message' => $message
@@ -55,7 +55,7 @@ class CryptoPro_Auth_Handler {
             $validation_result = $cert_validator->validate($cert_data);
            
             if (!$validation_result['valid']) {
-                $this->log_auth_attempt('error', $cert_data, $validation_result['error']);
+                self::log_auth_attempt('error', $cert_data, $validation_result['error']);
                 return array(
                     'success' => false,
                     'message' => $validation_result['error']
@@ -87,7 +87,7 @@ class CryptoPro_Auth_Handler {
             }
             
             if (!$verify_result['success']) {
-                $this->log_auth_attempt('error', $cert_data, $verify_result['message']);
+                self::log_auth_attempt('error', $cert_data, $verify_result['message']);
                 return $verify_result;
             }
             
@@ -95,7 +95,7 @@ class CryptoPro_Auth_Handler {
             $user = $this->find_or_create_user($cert_data);
             
             if (is_wp_error($user)) {
-                $this->log_auth_attempt('error', $cert_data, $user->get_error_message());
+                self::log_auth_attempt('error', $cert_data, $user->get_error_message());
                 return array(
                     'success' => false,
                     'message' => $user->get_error_message()
@@ -108,7 +108,7 @@ class CryptoPro_Auth_Handler {
             
             do_action('cryptopro_user_authenticated', $user->ID, $cert_data);
             
-            $this->log_auth_attempt('success', $cert_data, "User ID: {$user->ID}");
+            self::log_auth_attempt('success', $cert_data, "User ID: {$user->ID}");
             
             // Получаем URL редиректа из настроек
             $redirect_url = !empty($settings['redirect_url']) ? $settings['redirect_url'] : home_url();
@@ -121,7 +121,7 @@ class CryptoPro_Auth_Handler {
             );
             
         } catch (Exception $e) {
-            $this->log_auth_attempt('error', null, $e->getMessage());
+            self::log_auth_attempt('error', null, $e->getMessage());
             return array(
                 'success' => false,
                 'message' => $e->getMessage()
@@ -138,7 +138,7 @@ class CryptoPro_Auth_Handler {
      * @return void
      * @author @ddnitecry
      */
-    private function log_auth_attempt(string $status, mixed $cert_data, string $message): void {
+    public static function log_auth_attempt(string $status, mixed $cert_data, string $message): void {
         $settings = get_option('cryptopro_auth_settings', array());
         if (empty($settings['enable_logging'])) {
             return;
@@ -288,7 +288,7 @@ class CryptoPro_Auth_Handler {
                         
                         // VerifyCades возвращает коллекцию подписей, если проверка успешна
                         if ($signatures && (is_array($signatures) || is_object($signatures))) {
-                            error_log("CryptoPro Auth - PHP Extension: Signature verified successfully using CPSignedData::VerifyCades");
+                            self::log_auth_attempt('success', $certificate, "PHP Extension: Signature verified successfully using CPSignedData::VerifyCades");
                             
                             return array(
                                 'success' => true,
@@ -299,17 +299,17 @@ class CryptoPro_Auth_Handler {
                             throw new Exception('VerifyCades returned invalid result');
                         }
                     } catch (Exception $verifyException) {
-                        error_log("CryptoPro Auth - VerifyCades Exception: " . $verifyException->getMessage());
+                        self::log_auth_attempt('error', $certificate, "VerifyCades Exception: " . $verifyException->getMessage());
                         
                         // Если VerifyCades не прошел (например, из-за отсутствия цепочки сертификатов 0x80070490),
                         // пробуем стандартный метод Verify с флагом CADESCOM_VERIFY_SIGNATURE_ONLY (1)
                         try {
-                            error_log("CryptoPro Auth - Attempting fallback to CPSignedData::Verify with SignatureOnly flag");
+                            self::log_auth_attempt('debug', $certificate, "Attempting fallback to CPSignedData::Verify with SignatureOnly flag");
                             // Verify(SignedMessage, Detached, VerifyFlag)
                             // VerifyFlag: 1 = CADESCOM_VERIFY_SIGNATURE_ONLY
                             $signedData->Verify($signature, 0, 1);
                             
-                            error_log("CryptoPro Auth - PHP Extension: Signature verified successfully using CPSignedData::Verify (SignatureOnly)");
+                            self::log_auth_attempt('success', $certificate, "PHP Extension: Signature verified successfully using CPSignedData::Verify (SignatureOnly)");
                             
                             return array(
                                 'success' => true,
@@ -317,7 +317,7 @@ class CryptoPro_Auth_Handler {
                                 'data' => $data
                             );
                         } catch (Exception $verifyFallbackException) {
-                            error_log("CryptoPro Auth - Verify (SignatureOnly) Exception: " . $verifyFallbackException->getMessage());
+                            self::log_auth_attempt('error', $certificate, "Verify (SignatureOnly) Exception: " . $verifyFallbackException->getMessage());
                             
                             // Если и это не помогло, выбрасываем исключение дальше для fallback на simple verify
                             throw $verifyException;
@@ -325,7 +325,7 @@ class CryptoPro_Auth_Handler {
                     }
                     
                 } catch (Exception $e) {
-                    error_log("CryptoPro Auth - CPSignedData Error: " . $e->getMessage());
+                    self::log_auth_attempt('error', $certificate, "CPSignedData Error: " . $e->getMessage());
                     
                     // Если проверка через CPSignedData не удалась, пробуем через CPStore
                     return $this->verify_signature_via_store($signed_data, $signature, $certificate, $data);
@@ -336,7 +336,7 @@ class CryptoPro_Auth_Handler {
             }
             
         } catch (Exception $e) {
-            error_log("CryptoPro Auth - PHP Extension Exception: " . $e->getMessage());
+            self::log_auth_attempt('error', $certificate, "PHP Extension Exception: " . $e->getMessage());
             return array(
                 'success' => false,
                 'message' => $e->getMessage()
@@ -376,7 +376,7 @@ class CryptoPro_Auth_Handler {
             if (!empty($certificate) && !empty($data['certificate_subject'])) {
                 $cert_subject = $certificate['subjectName'] ?? $certificate['commonName'] ?? '';
                 if ($cert_subject !== $data['certificate_subject']) {
-                    error_log("CryptoPro Auth - Certificate mismatch");
+                    self::log_auth_attempt('error', $certificate, "Certificate mismatch");
                     return array(
                         'success' => false,
                         'message' => __('Несоответствие данных сертификата', 'cryptopro-auth')
@@ -384,7 +384,7 @@ class CryptoPro_Auth_Handler {
                 }
             }
             
-            error_log("CryptoPro Auth - PHP Extension: Signature verified using CPStore (basic validation)");
+            self::log_auth_attempt('success', $certificate, "PHP Extension: Signature verified using CPStore (basic validation)");
             
             return array(
                 'success' => true,
@@ -393,7 +393,7 @@ class CryptoPro_Auth_Handler {
             );
             
         } catch (Exception $e) {
-            error_log("CryptoPro Auth - CPStore Error: " . $e->getMessage());
+            self::log_auth_attempt('error', $certificate, "CPStore Error: " . $e->getMessage());
             // Fallback на упрощенную проверку
             return $this->verify_signature_simple($signed_data, $signature, $certificate);
         }
@@ -426,8 +426,8 @@ class CryptoPro_Auth_Handler {
             // Пробуем декодировать без stripslashes на случай если данные не экранированы
             $data = json_decode($signed_data, true);
             if (!$data) {
-                error_log("CryptoPro Auth - Invalid JSON data. Raw data: " . $signed_data);
-                error_log("CryptoPro Auth - Decoded attempt: " . $decoded_data);
+                self::log_auth_attempt('error', $certificate, "Invalid JSON data. Raw data: " . $signed_data);
+                self::log_auth_attempt('debug', $certificate, "Decoded attempt: " . $decoded_data);
                 return array(
                     'success' => false,
                     'message' => __('Неверный формат подписанных данных', 'cryptopro-auth')
@@ -439,8 +439,8 @@ class CryptoPro_Auth_Handler {
         $required_fields = ['timestamp', 'action', 'certificate_subject'];
         foreach ($required_fields as $field) {
             if (!isset($data[$field])) {
-                error_log("CryptoPro Auth - Missing required field: " . $field);
-                error_log("CryptoPro Auth - Available fields: " . implode(', ', array_keys($data)));
+                self::log_auth_attempt('error', $certificate, "Missing required field: " . $field);
+                self::log_auth_attempt('debug', $certificate, "Available fields: " . implode(', ', array_keys($data)));
                 return array(
                     'success' => false,
                     /* translators: %s: name of the required field */
@@ -454,7 +454,7 @@ class CryptoPro_Auth_Handler {
         
         // Проверяем формат подписи (должна быть base64)
         if (!preg_match('/^[a-zA-Z0-9+\/]*={0,2}$/', $clean_signature)) {
-            error_log("CryptoPro Auth - Invalid signature format. Length: " . strlen($clean_signature));
+            self::log_auth_attempt('error', $certificate, "Invalid signature format. Length: " . strlen($clean_signature));
             return array(
                 'success' => false,
                 'message' => __('Неверный формат подписи', 'cryptopro-auth')
@@ -466,7 +466,7 @@ class CryptoPro_Auth_Handler {
         $now = time();
         
         if (!$timestamp) {
-            error_log("CryptoPro Auth - Invalid timestamp: " . $data['timestamp']);
+            self::log_auth_attempt('error', $certificate, "Invalid timestamp: " . $data['timestamp']);
             return array(
                 'success' => false,
                 'message' => __('Неверный формат времени подписи', 'cryptopro-auth')
@@ -474,7 +474,7 @@ class CryptoPro_Auth_Handler {
         }
         
         if ($timestamp > $now + 60) { // Подпись из будущего (допуск 1 минута)
-            error_log("CryptoPro Auth - Future timestamp: " . $data['timestamp']);
+            self::log_auth_attempt('error', $certificate, "Future timestamp: " . $data['timestamp']);
             return array(
                 'success' => false,
                 'message' => __('Подпись из будущего времени', 'cryptopro-auth')
@@ -482,7 +482,7 @@ class CryptoPro_Auth_Handler {
         }
         
         if ($now - $timestamp > 300) { // Подпись старше 5 минут
-            error_log("CryptoPro Auth - Expired timestamp: " . $data['timestamp']);
+            self::log_auth_attempt('error', $certificate, "Expired timestamp: " . $data['timestamp']);
             return array(
                 'success' => false,
                 'message' => __('Подпись устарела (старше 5 минут)', 'cryptopro-auth')
@@ -493,9 +493,9 @@ class CryptoPro_Auth_Handler {
         if (!empty($certificate) && !empty($data['certificate_subject'])) {
             $cert_subject = $certificate['subjectName'] ?? $certificate['commonName'] ?? '';
             if ($cert_subject !== $data['certificate_subject']) {
-                error_log("CryptoPro Auth - Certificate mismatch");
-                error_log("CryptoPro Auth - Cert subject: " . $cert_subject);
-                error_log("CryptoPro Auth - Data subject: " . $data['certificate_subject']);
+                self::log_auth_attempt('error', $certificate, "Certificate mismatch");
+                self::log_auth_attempt('debug', $certificate, "Cert subject: " . $cert_subject);
+                self::log_auth_attempt('debug', $certificate, "Data subject: " . $data['certificate_subject']);
                 return array(
                     'success' => false,
                     'message' => __('Несоответствие данных сертификата', 'cryptopro-auth')
@@ -506,17 +506,17 @@ class CryptoPro_Auth_Handler {
         // Проверяем длину подписи (должна быть разумной)
         $signature_length = strlen($clean_signature);
         if ($signature_length < 100 || $signature_length > 10000) {
-            error_log("CryptoPro Auth - Invalid signature length: " . $signature_length);
+            self::log_auth_attempt('error', $certificate, "Invalid signature length: " . $signature_length);
             return array(
                 'success' => false,
                 'message' => __('Некорректная длина подписи', 'cryptopro-auth')
             );
         }
         
-        error_log("CryptoPro Auth - Signature verified for: " . ($data['certificate_subject'] ?? 'unknown'));
-        error_log("CryptoPro Auth - Signature length: " . $signature_length);
-        error_log("CryptoPro Auth - Timestamp: " . $data['timestamp']);
-        error_log("CryptoPro Auth - Action: " . $data['action']);
+        self::log_auth_attempt('success', $certificate, "Signature verified for: " . ($data['certificate_subject'] ?? 'unknown'));
+        self::log_auth_attempt('debug', $certificate, "Signature length: " . $signature_length);
+        self::log_auth_attempt('debug', $certificate, "Timestamp: " . $data['timestamp']);
+        self::log_auth_attempt('debug', $certificate, "Action: " . $data['action']);
         
         return array(
             'success' => true,
@@ -560,9 +560,9 @@ class CryptoPro_Auth_Handler {
         }
         
         // Логируем для отладки
-        error_log("CryptoPro Auth - Certificate data: " . print_r($cert_data, true));
-        error_log("CryptoPro Auth - Parsed common_name: " . $common_name);
-        error_log("CryptoPro Auth - Parsed email: " . $email);
+        self::log_auth_attempt('debug', $cert_data, "Certificate data: " . json_encode($cert_data, JSON_UNESCAPED_UNICODE));
+        self::log_auth_attempt('debug', $cert_data, "Parsed common_name: " . $common_name);
+        self::log_auth_attempt('debug', $cert_data, "Parsed email: " . $email);
         
         if (empty($email) && empty($common_name)) {
             return new WP_Error('invalid_certificate', __('Сертификат не содержит идентификационных данных', 'cryptopro-auth'));
