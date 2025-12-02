@@ -1,21 +1,21 @@
 (function ($) {
     'use strict';
 
-    if (typeof cryptopro_auth === 'undefined') {
-        console.error('CryptoPro Auth: Configuration not loaded!');
+    if (typeof criptapro_auth === 'undefined') {
+        console.error('CriptaPro Auth: Configuration not loaded!');
         return;
     }
 
-    console.log('CryptoPro Auth Plugin loaded', cryptopro_auth);
+    console.log('CriptaPro Auth Plugin loaded', criptapro_auth);
 
-    class CryptoProAuth {
+    class CriptaProAuth {
         constructor(container) {
             this.container = container;
             this.certificates = [];
             this.selectedCertificate = null;
-            this.debugMode = cryptopro_auth.debug_mode === true || cryptopro_auth.debug_mode === '1';
-            this.testMode = cryptopro_auth.test_mode === true || cryptopro_auth.test_mode === '1';
-            this.debugContainer = cryptopro_auth.debug_container || '.cryptopro-debug-container';
+            this.debugMode = criptapro_auth.debug_mode === true || criptapro_auth.debug_mode === '1';
+            this.testMode = criptapro_auth.test_mode === true || criptapro_auth.test_mode === '1';
+            this.debugContainer = criptapro_auth.debug_container || '.criptapro-debug-container';
             this.isProcessing = false;
             this.signatureType = 'attached'; // Всегда используем присоединенную подпись
 
@@ -23,12 +23,12 @@
         }
 
         async init() {
-            this.debugLog('=== CryptoPro Auth Initialized ===');
+            this.debugLog('=== CriptaPro Auth Initialized ===');
             this.debugLog('Домен: ' + window.location.hostname);
             this.createDebugContainer();
             this.bindEvents();
 
-            this.updateStatus(cryptopro_auth.strings.login_with_crypto, 'info');
+            this.updateStatus(criptapro_auth.strings.login_with_crypto, 'info');
         }
 
         async testCryptoProObjects() {
@@ -71,7 +71,7 @@
             if (this.debugMode) {
                 let $debugContainer = $(this.debugContainer);
                 if (!$debugContainer.length) {
-                    $debugContainer = $('<div class="cryptopro-debug-container"></div>').css({
+                    $debugContainer = $('<div class="criptapro-debug-container"></div>').css({
                         'max-height': '200px',
                         'overflow-y': 'auto',
                         'background': '#f8f9fa',
@@ -96,7 +96,7 @@
             const timestamp = new Date().toLocaleTimeString();
             const logMessage = `[${timestamp}] ${message}`;
 
-            console.log(`[CryptoPro] ${logMessage}`);
+            console.log(`[CriptaPro] ${logMessage}`);
 
             if (this.debugMode) {
                 let $debugContainer = $(this.debugContainer);
@@ -127,7 +127,7 @@
 
         bindEvents() {
             const $container = $(this.container);
-            const $button = $container.find('.cryptopro-auth-btn');
+            const $button = $container.find('.criptapro-auth-btn');
 
             this.debugLog('Кнопка найдена: ' + $button.length);
 
@@ -145,7 +145,7 @@
         }
 
         updateStatus(message, type = 'info') {
-            const $status = $(this.container).find('.cryptopro-auth-status');
+            const $status = $(this.container).find('.criptapro-auth-status');
             if ($status.length) {
                 const statusClass = `status-${type}`;
                 $status.removeClass('status-success status-error status-warning status-info')
@@ -161,7 +161,7 @@
 
             this.isProcessing = true;
             this.debugLog('Начало процесса авторизации...');
-            this.updateStatus(cryptopro_auth.strings.auth_process, 'info');
+            this.updateStatus(criptapro_auth.strings.auth_process, 'info');
 
             try {
                 // Загружаем сертификаты по официальному методу
@@ -170,7 +170,7 @@
                 if (this.certificates.length > 0) {
                     this.showCertificateSelector();
                 } else {
-                    this.updateStatus(cryptopro_auth.strings.no_certificates, 'error');
+                    this.updateStatus(criptapro_auth.strings.no_certificates, 'error');
                 }
 
             } catch (error) {
@@ -282,7 +282,7 @@
             const siteUrl = window.location.origin;
 
             let html = `
-                <div class="cryptopro-confirm-dialog" style="
+                <div class="criptapro-confirm-dialog" style="
                     position: fixed;
                     top: 0;
                     left: 0;
@@ -294,7 +294,7 @@
                     justify-content: center;
                     z-index: 10000;
                 ">
-                    <div class="cryptopro-dialog-content" style="
+                    <div class="criptapro-dialog-content" style="
                         background: white;
                         border: 2px solid #333;
                         border-radius: 4px;
@@ -349,10 +349,10 @@
             if (this.certificates.length === 0) {
                 html += `
                         <div style="padding: 20px; text-align: center; color: #666; margin: 15px 0;">
-                            ${cryptopro_auth.strings.no_certificates}
+                            ${criptapro_auth.strings.no_certificates}
                         </div>
                         <div style="text-align: center; margin-top: 20px;">
-                            <button class="cryptopro-btn-no" style="
+                            <button class="criptapro-btn-no" style="
                                 background: #dc3545;
                                 color: white;
                                 padding: 10px 30px;
@@ -408,7 +408,7 @@
                 html += `
                         </div>
                         <div style="text-align: center; margin-top: 20px;">
-                            <button class="cryptopro-btn-yes" style="
+                            <button class="criptapro-btn-yes" style="
                                 background: #28a745;
                                 color: white;
                                 padding: 10px 30px;
@@ -418,7 +418,7 @@
                                 font-size: 14px;
                                 margin-right: 10px;
                             ">Да</button>
-                            <button class="cryptopro-btn-no" style="
+                            <button class="criptapro-btn-no" style="
                                 background: #dc3545;
                                 color: white;
                                 padding: 10px 30px;
@@ -440,7 +440,7 @@
             this.debugLog('Интерфейс выбора создан');
 
             // Обработчики событий
-            const $dialog = $container.find('.cryptopro-confirm-dialog');
+            const $dialog = $container.find('.criptapro-confirm-dialog');
             const $certItems = $dialog.find('.certificate-item');
 
             $certItems.hover(
@@ -459,7 +459,7 @@
             });
 
             // Кнопка "Да"
-            $dialog.find('.cryptopro-btn-yes').on('click', () => {
+            $dialog.find('.criptapro-btn-yes').on('click', () => {
                 // Если сертификат не выбран, но есть только один - выбираем его
                 if (!this.selectedCertificate && this.certificates.length === 1) {
                     this.selectedCertificate = this.certificates[0];
@@ -475,7 +475,7 @@
             });
 
             // Кнопка "Нет"
-            $dialog.find('.cryptopro-btn-no').on('click', () => {
+            $dialog.find('.criptapro-btn-no').on('click', () => {
                 this.debugLog('Операция отменена пользователем');
                 $dialog.remove();
                 this.updateStatus('Операция отменена', 'warning');
@@ -484,8 +484,8 @@
 
             // Закрытие по клику вне диалога
             $dialog.on('click', (e) => {
-                if ($(e.target).hasClass('cryptopro-confirm-dialog')) {
-                    $dialog.find('.cryptopro-btn-no').click();
+                if ($(e.target).hasClass('criptapro-confirm-dialog')) {
+                    $dialog.find('.criptapro-btn-no').click();
                 }
             });
         }
@@ -504,7 +504,7 @@
                 const authData = {
                     timestamp: new Date().toISOString(),
                     nonce: Math.random().toString(36).substring(2, 15),
-                    action: 'cryptopro_auth',
+                    action: 'criptapro_auth',
                     site_url: window.location.href,
                     certificate_subject: this.selectedCertificate.subjectName,
                     signature_type: this.signatureType
@@ -540,7 +540,7 @@
 
                 if (response.success) {
                     this.debugLog('✅ Авторизация успешна', 'success');
-                    this.updateStatus(cryptopro_auth.strings.auth_success, 'success');
+                    this.updateStatus(criptapro_auth.strings.auth_success, 'success');
 
                     // Используем редирект из ответа сервера или перезагружаем страницу
                     const redirectUrl = response.data && response.data.redirect_url ? response.data.redirect_url : window.location.href;
@@ -633,11 +633,11 @@
         async sendAuthRequest(data, signature, signatureType) {
             return new Promise((resolve, reject) => {
                 $.ajax({
-                    url: cryptopro_auth.ajax_url,
+                    url: criptapro_auth.ajax_url,
                     type: 'POST',
                     data: {
-                        action: 'cryptopro_auth',
-                        nonce: cryptopro_auth.nonce,
+                        action: 'criptapro_auth',
+                        nonce: criptapro_auth.nonce,
                         signed_data: data,
                         signature: signature,
                         signature_type: signatureType,
@@ -657,7 +657,7 @@
                     },
                     error: (xhr, status, error) => {
                         this.debugLog('Ошибка AJAX: ' + error, 'error');
-                        reject(new Error(cryptopro_auth.strings.network_error + ': ' + error));
+                        reject(new Error(criptapro_auth.strings.network_error + ': ' + error));
                     }
                 });
             });
@@ -670,14 +670,14 @@
         // Ждем инициализации cadesplugin как в официальном примере
         if (window.cadesplugin) {
             cadesplugin.then(function () {
-                $('.cryptopro-auth-container').each(function () {
-                    new CryptoProAuth(this);
+                $('.criptapro-auth-container').each(function () {
+                    new CriptaProAuth(this);
                 });
             }).catch(function (err) {
-                console.error('CryptoPro Auth: Failed to initialize cadesplugin', err);
+                console.error('CriptaPro Auth: Failed to initialize cadesplugin', err);
             });
         } else {
-            console.error('CryptoPro Auth: cadesplugin not found');
+            console.error('CriptaPro Auth: cadesplugin not found');
         }
     });
 

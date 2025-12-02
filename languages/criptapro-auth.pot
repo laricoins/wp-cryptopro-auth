@@ -1,7 +1,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: CryptoPro Auth for WP\n"
+"Project-Id-Version: CriptaPro Auth\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-20 07:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.8.0; wp-6.8.3; php-8.2.29\n"
-"X-Domain: cryptopro-auth"
+"X-Domain: criptapro-auth"
 
 #: templates/admin-settings.php:50
 msgid "API Endpoint"
@@ -25,11 +25,11 @@ msgid "COM поддержка не доступна"
 msgstr ""
 
 #: includes/class-admin.php:46
-msgid "CryptoPro Auth"
+msgid "CriptaPro Auth"
 msgstr ""
 
 #. Name of the plugin
-msgid "CryptoPro Auth for WP"
+msgid "CriptaPro Auth"
 msgstr ""
 
 #: templates/admin-settings.php:188
@@ -68,7 +68,7 @@ msgstr ""
 msgid "Авторизация по HTTP запрещена настройками безопасности"
 msgstr ""
 
-#: cryptopro-auth.php:146 includes/class-auth-handler.php:120
+#: criptapro-auth.php:146 includes/class-auth-handler.php:120
 msgid "Авторизация успешна"
 msgstr ""
 
@@ -132,7 +132,7 @@ msgstr ""
 msgid "Включить тест-режим (пропускать проверку подписи на сервере)"
 msgstr ""
 
-#: cryptopro-auth.php:151 templates/login-form.php:13
+#: criptapro-auth.php:151 templates/login-form.php:13
 #: includes/class-shortcodes.php:37
 msgid "Войти с помощью КриптоПро"
 msgstr ""
@@ -141,7 +141,7 @@ msgstr ""
 msgid "Войти через ЭЦП"
 msgstr ""
 
-#: cryptopro-auth.php:148
+#: criptapro-auth.php:148
 msgid "Выберите сертификат:"
 msgstr ""
 
@@ -150,7 +150,7 @@ msgid "Выключен"
 msgstr ""
 
 #: templates/debug-info.php:10 includes/class-shortcodes.php:127
-msgid "Диагностика CryptoPro Auth"
+msgid "Диагностика CriptaPro Auth"
 msgstr ""
 
 #: includes/class-ajax.php:125
@@ -221,10 +221,10 @@ msgid "Настройки CORS"
 msgstr ""
 
 #: templates/admin-settings.php:12 includes/class-admin.php:45
-msgid "Настройки CryptoPro Auth"
+msgid "Настройки CriptaPro Auth"
 msgstr ""
 
-#: cryptopro-auth.php:150
+#: criptapro-auth.php:150
 msgid "Начало процесса авторизации..."
 msgstr ""
 
@@ -292,7 +292,7 @@ msgstr ""
 msgid "Отсутствуют данные для проверки подписи"
 msgstr ""
 
-#: cryptopro-auth.php:147
+#: criptapro-auth.php:147
 msgid "Ошибка авторизации"
 msgstr ""
 
@@ -300,7 +300,7 @@ msgstr ""
 msgid "Ошибка проверки"
 msgstr ""
 
-#: cryptopro-auth.php:152
+#: criptapro-auth.php:152
 msgid "Ошибка сети"
 msgstr ""
 
@@ -308,7 +308,7 @@ msgstr ""
 msgid "Параметры:"
 msgstr ""
 
-#: cryptopro-auth.php:144
+#: criptapro-auth.php:144
 msgid "Плагин КриптоПро не найден"
 msgstr ""
 
@@ -406,7 +406,7 @@ msgstr ""
 msgid "Ручная проверка"
 msgstr ""
 
-#: cryptopro-auth.php:149
+#: criptapro-auth.php:149
 msgid "Сертификат выбран"
 msgstr ""
 
@@ -430,7 +430,7 @@ msgstr ""
 msgid "Сертификат не содержит информации об организации"
 msgstr ""
 
-#: cryptopro-auth.php:145
+#: criptapro-auth.php:145
 msgid "Сертификаты не найдены"
 msgstr ""
 

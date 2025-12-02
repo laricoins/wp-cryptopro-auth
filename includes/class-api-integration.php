@@ -3,7 +3,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class CryptoPro_API_Integration {
+class CriptaPro_API_Integration {
     
     /**
      * @var array $settings Настройки плагина
@@ -16,7 +16,7 @@ class CryptoPro_API_Integration {
      * @author @ddnitecry
      */
     public function __construct() {
-        $this->settings = get_option('cryptopro_auth_settings', array());
+        $this->settings = get_option('criptapro_auth_settings', array());
     }
     
     /**
@@ -56,7 +56,7 @@ class CryptoPro_API_Integration {
         // Проверка через COM объект КриптоПро (только Windows)
         try {
             if (!class_exists('COM')) {
-                throw new Exception(__('COM поддержка не доступна', 'cryptopro-auth'));
+                throw new Exception(__('COM поддержка не доступна', 'criptapro-auth'));
             }
             
             $cryptoPro = new COM('CryptoPro.Certificate');

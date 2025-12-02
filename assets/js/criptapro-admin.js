@@ -1,29 +1,29 @@
-(function($) {
+(function ($) {
     'use strict';
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         // Проверка CPStore
-        $('#check-cpstore').on('click', function() {
+        $('#check-cpstore').on('click', function () {
             const $button = $(this);
             const $result = $('#cpstore-check-result');
-            
-            $button.prop('disabled', true).text(cryptopro_admin.strings.checking);
+
+            $button.prop('disabled', true).text(criptapro_admin.strings.checking);
             $result.hide();
-            
+
             $.ajax({
-                url: cryptopro_admin.ajax_url,
+                url: criptapro_admin.ajax_url,
                 type: 'POST',
                 data: {
-                    action: 'cryptopro_check_cpstore',
-                    nonce: cryptopro_admin.nonce
+                    action: 'criptapro_check_cpstore',
+                    nonce: criptapro_admin.nonce
                 },
-                success: function(response) {
+                success: function (response) {
                     $button.prop('disabled', false).text('Проверить CPStore');
-                    
+
                     if (response.success && response.data) {
                         const data = response.data;
                         let html = '';
-                        
+
                         if (data.available && data.php_extension) {
                             html = '<div class="notice notice-success inline"><p><strong>✓ ' + data.message + '</strong></p>';
                             if (data.details.classes) {
@@ -51,13 +51,13 @@
                             html = '<div class="notice notice-error inline"><p><strong>✗ ' + data.message + '</strong></p></div>';
                             $result.removeClass('notice-success notice-warning').addClass('notice-error');
                         }
-                        
+
                         $result.html(html).show();
                     } else {
                         $result.html('<div class="notice notice-error inline"><p>Ошибка проверки</p></div>').show();
                     }
                 },
-                error: function() {
+                error: function () {
                     $button.prop('disabled', false).text('Проверить CPStore');
                     $('#cpstore-check-result').html('<div class="notice notice-error inline"><p>Ошибка запроса</p></div>').show();
                 }

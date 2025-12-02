@@ -3,7 +3,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class CryptoPro_Certificate_Validator {
+class CriptaPro_Certificate_Validator {
     
     /**
      * Валидация сертификата.
@@ -17,14 +17,14 @@ class CryptoPro_Certificate_Validator {
         if (empty($certificate) || !is_array($certificate)) {
             return array(
                 'valid' => false,
-                'error' => __('Неверный формат сертификата', 'cryptopro-auth')
+                'error' => __('Неверный формат сертификата', 'criptapro-auth')
             );
         }
         
         // Логируем для отладки
         if (defined('WP_DEBUG') && WP_DEBUG) {
-            if (class_exists('CryptoPro_Auth_Handler')) {
-                CryptoPro_Auth_Handler::log_auth_attempt('debug', $certificate, 'Certificate Data Validation');
+            if (class_exists('CriptaPro_Auth_Handler')) {
+                CriptaPro_Auth_Handler::log_auth_attempt('debug', $certificate, 'Certificate Data Validation');
             }
         }
         
@@ -35,7 +35,7 @@ class CryptoPro_Certificate_Validator {
                 return array(
                     'valid' => false,
                     /* translators: %s: name of the required certificate field */
-                    'error' => sprintf(__('Отсутствует обязательное поле: %s', 'cryptopro-auth'), $field)
+                    'error' => sprintf(__('Отсутствует обязательное поле: %s', 'criptapro-auth'), $field)
                 );
             }
         }
@@ -89,7 +89,7 @@ class CryptoPro_Certificate_Validator {
             if ($valid_from && $valid_from > $now) {
                 return array(
                     'valid' => false,
-                    'error' => __('Сертификат еще не действителен', 'cryptopro-auth')
+                    'error' => __('Сертификат еще не действителен', 'criptapro-auth')
                 );
             }
         }
@@ -100,7 +100,7 @@ class CryptoPro_Certificate_Validator {
             if ($valid_to && $valid_to < $now) {
                 return array(
                     'valid' => false,
-                    'error' => __('Срок действия сертификата истек', 'cryptopro-auth')
+                    'error' => __('Срок действия сертификата истек', 'criptapro-auth')
                 );
             }
         }
@@ -162,7 +162,7 @@ class CryptoPro_Certificate_Validator {
      * @author @ddnitecry
      */
     private function check_organization(array $parsed_subject): array {
-        $settings = get_option('cryptopro_auth_settings', array());
+        $settings = get_option('criptapro_auth_settings', array());
         $allowed_organizations = $settings['allowed_organizations'] ?? array();
         
         // Если ограничений по организациям нет - пропускаем проверку
@@ -174,7 +174,7 @@ class CryptoPro_Certificate_Validator {
         if (empty($org)) {
             return array(
                 'valid' => false,
-                'error' => __('Сертификат не содержит информации об организации', 'cryptopro-auth')
+                'error' => __('Сертификат не содержит информации об организации', 'criptapro-auth')
             );
         }
         
@@ -183,7 +183,7 @@ class CryptoPro_Certificate_Validator {
             return array(
                 'valid' => false,
                 /* translators: %s: organization name from the certificate */
-                'error' => sprintf(__("Организация '%s' не имеет доступа", 'cryptopro-auth'), $org)
+                'error' => sprintf(__("Организация '%s' не имеет доступа", 'criptapro-auth'), $org)
             );
         }
         
@@ -198,7 +198,7 @@ class CryptoPro_Certificate_Validator {
      * @author @ddnitecry
      */
     private function check_issuer(?string $issuer_name): array {
-        $settings = get_option('cryptopro_auth_settings', array());
+        $settings = get_option('criptapro_auth_settings', array());
         $trusted_issuers_text = $settings['trusted_issuers'] ?? '';
         
         if (empty($trusted_issuers_text)) {
@@ -214,7 +214,7 @@ class CryptoPro_Certificate_Validator {
         if (empty($issuer_name)) {
             return array(
                 'valid' => false,
-                'error' => __('Сертификат не содержит информации об издателе', 'cryptopro-auth')
+                'error' => __('Сертификат не содержит информации об издателе', 'criptapro-auth')
             );
         }
         
@@ -227,7 +227,7 @@ class CryptoPro_Certificate_Validator {
         
         return array(
             'valid' => false,
-            'error' => __('Сертификат выдан недоверенным Удостоверяющим Центром', 'cryptopro-auth')
+            'error' => __('Сертификат выдан недоверенным Удостоверяющим Центром', 'criptapro-auth')
         );
     }
 }

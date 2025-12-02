@@ -1,4 +1,4 @@
-.cryptopro-auth-container {
+.criptapro-auth-container {
     margin: 20px 0;
     padding: 20px;
     border: 1px solid #ddd;
@@ -7,7 +7,7 @@
     text-align: center;
 }
 
-.cryptopro-auth-btn {
+.criptapro-auth-btn {
     background: #0073aa;
     color: white;
     padding: 12px 24px;
@@ -18,16 +18,16 @@
     transition: background 0.3s ease;
 }
 
-.cryptopro-auth-btn:hover {
+.criptapro-auth-btn:hover {
     background: #005a87;
 }
 
-.cryptopro-auth-btn:disabled {
+.criptapro-auth-btn:disabled {
     background: #ccc;
     cursor: not-allowed;
 }
 
-.cryptopro-auth-status {
+.criptapro-auth-status {
     margin-top: 15px;
     padding: 12px;
     border-radius: 4px;
@@ -85,7 +85,7 @@
     background-color: #f8f9fa;
 }
 
-.cryptopro-debug-container {
+.criptapro-debug-container {
     max-height: 200px;
     overflow-y: auto;
     background: #f8f9fa;
@@ -97,11 +97,11 @@
     margin-top: 10px;
 }
 
-.cryptopro-confirm-dialog {
+.criptapro-confirm-dialog {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
-.cryptopro-dialog-content {
+.criptapro-dialog-content {
     animation: fadeIn 0.2s ease-in;
 }
 
@@ -116,20 +116,20 @@
     }
 }
 
-.cryptopro-btn-yes:hover {
+.criptapro-btn-yes:hover {
     background: #218838 !important;
 }
 
-.cryptopro-btn-no:hover {
+.criptapro-btn-no:hover {
     background: #c82333 !important;
 }
 
 @media (max-width: 768px) {
-    .cryptopro-auth-btn {
+    .criptapro-auth-btn {
         width: 100%;
     }
     
-    .cryptopro-dialog-content {
+    .criptapro-dialog-content {
         width: 95% !important;
         padding: 15px !important;
     }

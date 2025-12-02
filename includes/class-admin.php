@@ -3,7 +3,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class CryptoPro_Admin {
+class CriptaPro_Admin {
 
     /**
      * Конструктор класса.
@@ -16,7 +16,7 @@ class CryptoPro_Admin {
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
         
         // Добавляем ссылку "Настройки" в список плагинов
-        $plugin_basename = plugin_basename(CRYPTOPRO_AUTH_PLUGIN_PATH . 'cryptopro-auth.php');
+        $plugin_basename = plugin_basename(CRIPTAPRO_AUTH_PLUGIN_PATH . 'cryptopro-auth.php');
         add_filter('plugin_action_links_' . $plugin_basename, array($this, 'add_action_links'));
     }
 
@@ -28,7 +28,7 @@ class CryptoPro_Admin {
      * @author @ddnitecry
      */
     public function add_action_links(array $links): array {
-        $settings_link = '<a href="options-general.php?page=cryptopro-auth-settings">' . __('Настройки', 'cryptopro-auth') . '</a>';
+        $settings_link = '<a href="options-general.php?page=criptapro-auth-settings">' . __('Настройки', 'criptapro-auth') . '</a>';
         // Добавляем ссылку в конец массива (после Deactivate)
         $links['settings'] = $settings_link;
         return $links;
@@ -42,10 +42,10 @@ class CryptoPro_Admin {
      */
     public function add_admin_menu(): void {
         add_options_page(
-            __('Настройки CryptoPro Auth', 'cryptopro-auth'),
-            __('CryptoPro Auth', 'cryptopro-auth'),
+            __('CriptaPro Auth Settings', 'criptapro-auth'),
+            __('CriptaPro Auth', 'criptapro-auth'),
             'manage_options',
-            'cryptopro-auth-settings',
+            'criptapro-auth-settings',
             array($this, 'admin_settings_page')
         );
     }
@@ -57,7 +57,7 @@ class CryptoPro_Admin {
      * @author @ddnitecry
      */
     public function admin_settings_page(): void {
-        include CRYPTOPRO_AUTH_PLUGIN_PATH . 'templates/admin-settings.php';
+        include CRIPTAPRO_AUTH_PLUGIN_PATH . 'templates/admin-settings.php';
     }
 
     /**
@@ -67,7 +67,7 @@ class CryptoPro_Admin {
      * @author @ddnitecry
      */
     public function register_settings(): void {
-        register_setting('cryptopro_auth_settings', 'cryptopro_auth_settings', array(
+        register_setting('criptapro_auth_settings', 'criptapro_auth_settings', array(
             'sanitize_callback' => array($this, 'sanitize_settings')
         ));
     }
@@ -131,31 +131,31 @@ class CryptoPro_Admin {
      * @author @ddnitecry
      */
     public function enqueue_admin_scripts(string $hook): void {
-        if ($hook === 'settings_page_cryptopro-auth-settings') {
+        if ($hook === 'settings_page_criptapro-auth-settings') {
             $random_version = wp_rand(1000, 9999) . '.' . time();
             
             wp_enqueue_script(
-                'cryptopro-auth-admin',
-                CRYPTOPRO_AUTH_PLUGIN_URL . 'assets/js/admin.js',
+                'criptapro-auth-admin',
+                CRIPTAPRO_AUTH_PLUGIN_URL . 'assets/js/criptapro-admin.js',
                 array('jquery'),
                 $random_version,
                 true
             );
             
             wp_enqueue_style(
-                'cryptopro-auth-admin-style',
-                CRYPTOPRO_AUTH_PLUGIN_URL . 'assets/css/admin.css',
+                'criptapro-auth-admin-style',
+                CRIPTAPRO_AUTH_PLUGIN_URL . 'assets/css/criptapro-admin.css',
                 array(),
                 $random_version
             );
             
-            wp_localize_script('cryptopro-auth-admin', 'cryptopro_admin', array(
+            wp_localize_script('criptapro-auth-admin', 'criptapro_admin', array(
                 'ajax_url' => admin_url('admin-ajax.php'),
-                'nonce' => wp_create_nonce('cryptopro_auth_nonce'),
+                'nonce' => wp_create_nonce('criptapro_auth_nonce'),
                 'strings' => array(
-                    'checking' => __('Проверка...', 'cryptopro-auth'),
-                    'check_success' => __('Проверка успешна', 'cryptopro-auth'),
-                    'check_error' => __('Ошибка проверки', 'cryptopro-auth')
+                    'checking' => __('Проверка...', 'criptapro-auth'),
+                    'check_success' => __('Проверка успешна', 'criptapro-auth'),
+                    'check_error' => __('Ошибка проверки', 'criptapro-auth')
                 )
             ));
         }
